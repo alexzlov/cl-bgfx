@@ -10,7 +10,8 @@
   :pathname "src"
   :components ((:file "package")
                (:file "cl-bgfx")
-               (:file "ffi")))
+               (:file "ffi")
+               (:file "constants")))
 
 (asdf:defsystem #:cl-bgfx/examples
 	:description "CL-BGFX examples ported from original bgfx examples"
