@@ -1,5 +1,4 @@
 ;;;; package.lisp
 
 (defpackage #:cl-bgfx
-  (:use #:cl))
-
+  (:use #:cl #:cffi))

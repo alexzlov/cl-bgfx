@@ -1,7 +1,0 @@
-(defpackage #:cl-bgfx-consts
-	(:use #:cl))
-
-(in-package :cl-bgfx-consts)
-
-(let ((pack (find-package :cl-bgfx-consts)))
-  (do-all-symbols (sym pack) (when (eql (symbol-package sym) pack) (export sym))))
