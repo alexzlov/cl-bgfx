@@ -1,6 +1,6 @@
 (in-package :cl-bgfx)
 
-(defconstant +BGFX-CLEAR-NONE+ #x0000)
+(defconstant +BGFX-CLEAR-NONE+  #x0000)
 (defconstant +BGFX-CLEAR-COLOR+ #x0001)
 (defconstant +BGFX-CLEAR-DEPTH+ #x0002)
 
