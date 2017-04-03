@@ -273,16 +273,15 @@
               (progn 
                 (reset x y +bgfx-reset-vsync+)
                 (set-view-rect 0 0 0 x y)
-                (render-loop x y)
+                (render-loop)
                 0))
           1))))
 
-(defun render-loop (w h)
+(defun render-loop ()
   (let ((a (foreign-string-alloc "Lisp bgfx test..."))
         (b (foreign-string-alloc "Initialization and debug text test..."))
         (c (foreign-string-alloc #?"Color can be changed with ANSI \x1b[9;me\x1b[10;ms\x1b[11;mc\x1b[12;ma\x1b[13;mp\x1b[14;me\x1b[0m code too." :encoding :ascii))
-        (d (foreign-string-alloc #?"Backbuffer %dW x %dH in pixels, debug text %dW x %dH in characters."))
-        (e (foreign-string-alloc "Fuck")))
+        (d (foreign-string-alloc #?"Backbuffer %dW x %dH in pixels, debug text %dW x %dH in characters.")))
     (progn
       (touch 0)
       (dbg-text-clear 0 nil)
@@ -293,15 +292,15 @@
              (width (foreign-slot-value bgfx-stats '(:struct stats) 'width))
              (height (foreign-slot-value bgfx-stats '(:struct stats) 'height))
              (text-width (foreign-slot-value bgfx-stats '(:struct stats) 'text-width))
-             (text-height (foreign-slot-value bgfx-stats '(:struct stats) 'text-height)))
-        (dbg-text-printf 0 6 #x0f d :int width :int height :int text-width :int text-height))
-      (let ((logo-ptr (foreign-alloc :uint8 :initial-contents *logo*)))      	
+             (text-height (foreign-slot-value bgfx-stats '(:struct stats) 'text-height))
+             (logo-ptr (foreign-alloc :uint8 :initial-contents *logo*)))
+        (dbg-text-printf 0 6 #x0f d :int width :int height :int text-width :int text-height) 
         (dbg-text-image 
-        	(round (* (- (max (/ (/ w 2) 8) 20) 20) 1.0))
-        	(round (* (- (max (/ (/ h 2) 16) 6) 6) 1.0))
-        	40  12 logo-ptr 160))
+         (round (* (- (max (/ (/ width 2) 8) 20) 20) 1.0))
+         (round (* (- (max (/ (/ height 2) 16) 6) 6) 1.0))
+         40  12 logo-ptr 160))
              
-      (frame nil))))
+        (frame nil))))
 
 (defun run ()
   (sdl2:with-init (:video)
@@ -339,4 +338,4 @@
                (sdl2-ffi.functions:sdl-set-event-filter (null-pointer) nil)
                (bgfx-shutdown)
                t))
-            (:idle () (render-loop 640 480)))))))))
+            (:idle () (render-loop)))))))))

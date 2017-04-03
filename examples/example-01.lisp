@@ -7,7 +7,7 @@
 (in-package :example-01)
 
 (defparameter *logo* #(
-    #xdc #x03 #xdc #x03 #xdc #x03 #xdc #x03 #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;; ........ . . . .
+        #xdc #x03 #xdc #x03 #xdc #x03 #xdc #x03 #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;; ........ . . . .
 	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
 	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #xdc #x08 ;;  . . . . . . ...
 	#xdc #x03 #xdc #x07 #xdc #x07 #xdc #x08 #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;; ........ . . . .
@@ -259,6 +259,8 @@
 	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
 ))
 
+(defparameter *logo-ptr* nil)
+
 (eval-when (:compile-toplevel :execute :load-toplevel)
   (enable-interpol-syntax))
 
@@ -280,7 +282,7 @@
 (defun render-loop ()
   (let ((a (foreign-string-alloc "Lisp bgfx test..."))
         (b (foreign-string-alloc "Initialization and debug text test..."))
-        (c (foreign-string-alloc #?"Color can be changed with ANSI \x1b[9;me\x1b[10;ms\x1b[11;mc\x1b[12;ma\x1b[13;mp\x1b[14;me\x1b[0m code too." :encoding :ascii))
+        (c (foreign-string-alloc #?"Color can be changed with ANSI \x1b[9;me\x1b[10;ms\x1b[11;mc\x1b[12;ma\x1b[13;mp\x1b[14;me\x1b[0m code too."))
         (d (foreign-string-alloc #?"Backbuffer %dW x %dH in pixels, debug text %dW x %dH in characters.")))
     (progn
       (touch 0)
@@ -292,13 +294,12 @@
              (width (foreign-slot-value bgfx-stats '(:struct stats) 'width))
              (height (foreign-slot-value bgfx-stats '(:struct stats) 'height))
              (text-width (foreign-slot-value bgfx-stats '(:struct stats) 'text-width))
-             (text-height (foreign-slot-value bgfx-stats '(:struct stats) 'text-height))
-             (logo-ptr (foreign-alloc :uint8 :initial-contents *logo*)))
+             (text-height (foreign-slot-value bgfx-stats '(:struct stats) 'text-height)))
         (dbg-text-printf 0 6 #x0f d :int width :int height :int text-width :int text-height) 
         (dbg-text-image 
          (round (* (- (max (/ (/ width 2) 8) 20) 20) 1.0))
          (round (* (- (max (/ (/ height 2) 16) 6) 6) 1.0))
-         40  12 logo-ptr 160))
+         40  12 *logo-ptr* 160))
              
         (frame nil))))
 
@@ -311,6 +312,7 @@
              (p-data '(:struct platform-data)))
       (let ((wm-info (sdl2:get-window-wm-info window)))
         (progn
+          (setf *logo-ptr* (foreign-alloc :uint8 :initial-contents *logo*))
           (setf *win* window)
           (sdl2-ffi.functions:sdl-set-event-filter (cffi:callback event-filter) nil)
           (setf (foreign-slot-value callback '(:struct callback-interface) 'vtbl)
@@ -336,6 +338,7 @@
             (:quit ()
              (progn
                (sdl2-ffi.functions:sdl-set-event-filter (null-pointer) nil)
+               (foreign-free *logo-ptr*)
                (bgfx-shutdown)
                t))
             (:idle () (render-loop)))))))))
