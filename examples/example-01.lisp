@@ -6,6 +6,259 @@
 
 (in-package :example-01)
 
+(defparameter *logo* #(
+    #xdc #x03 #xdc #x03 #xdc #x03 #xdc #x03 #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;; ........ . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #xdc #x08 ;;  . . . . . . ...
+	#xdc #x03 #xdc #x07 #xdc #x07 #xdc #x08 #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;; ........ . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#xde #x03 #xb0 #x3b #xb1 #x3b #xb2 #x3b #xdb #x3b #x20 #x0f #x20 #x0f #x20 #x0f ;; ...;.;.;.; . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #xdc #x03 #xb1 #x3b #xb2 #x3b ;;  . . . . ....;.;
+	#xdb #x3b #xdf #x03 #xdf #x3b #xb2 #x3f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;; .;...;.? . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #xb1 #x3b #xb1 #x3b #xb2 #x3b #xb2 #x3f #x20 #x0f #x20 #x0f #x20 #x0f ;;  ..;.;.;.? . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #xb1 #x3b #xb1 #x3b #xb2 #x3b ;;  . . . . ..;.;.;
+	#xb2 #x3f #x20 #x0f #x20 #x0f #xdf #x03 #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;; .? . ... . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #xb1 #x3b #xb1 #x3b #xb1 #x3b #xb1 #x3f #xdc #x0b #xdc #x03 #xdc #x03 ;;  ..;.;.;.?......
+	#xdc #x03 #xdc #x03 #x20 #x0f #x20 #x0f #xdc #x08 #xdc #x03 #xdc #x03 #xdc #x03 ;; .... . .........
+	#xdc #x03 #xdc #x03 #xdc #x03 #xdc #x08 #x20 #x0f #xb1 #x3b #xb1 #x3b #xb1 #x3b ;; ........ ..;.;.;
+	#xb1 #x3f #xb1 #x3f #xb2 #x0b #x20 #x0f #x20 #x0f #xdc #x03 #xdc #x03 #xdc #x03 ;; .?.?.. . .......
+	#x20 #x0f #x20 #x0f #xdc #x03 #xdc #x03 #xdc #x03 #x20 #x0f #x20 #x01 #x20 #x0f ;;  . ....... . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #xb2 #x3b #xb1 #x3b #xb0 #x3b #xb0 #x3f #x20 #x0f #xde #x03 #xb0 #x3f ;;  ..;.;.;.? ....?
+	#xb1 #x3f #xb2 #x3f #xdd #x03 #xde #x03 #xdb #x03 #xdb #x03 #xb2 #x3f #x20 #x0f ;; .?.?.........? .
+	#x20 #x0f #xb0 #x3f #xb1 #x3f #xb2 #x3f #xde #x38 #xb2 #x3b #xb1 #x3b #xb0 #x3b ;;  ..?.?.?.8.;.;.;
+	#xb0 #x3f #x20 #x0f #x20 #x0f #x20 #x0f #xb0 #x3b #xb1 #x3b #xb2 #x3b #xb2 #x3f ;; .? . . ..;.;.;.?
+	#xdd #x03 #xde #x03 #xb0 #x3f #xb1 #x3f #xb2 #x3f #xdd #x03 #x20 #x01 #x20 #x0f ;; .....?.?.?.. . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #xb2 #x3b #xb1 #x3b #xb0 #x3b #xb0 #x3f #x20 #x0f #x20 #x0f #xdb #x03 ;;  ..;.;.;.? . ...
+	#xb0 #x3f #xb1 #x3f #xdd #x03 #xb1 #x3b #xb0 #x3b #xdb #x03 #xb1 #x3f #x20 #x0f ;; .?.?...;.;...? .
+	#x20 #x0f #x20 #x3f #xb0 #x3f #xb1 #x3f #xb0 #x3b #xb2 #x3b #xb1 #x3b #xb0 #x3b ;;  . ?.?.?.;.;.;.;
+	#xb0 #x3f #x20 #x0f #x20 #x0f #x20 #x0f #xdc #x08 #xdc #x3b #xb1 #x3b #xb1 #x3f ;; .? . . ....;.;.?
+	#xb1 #x3b #xb0 #x3b #xb2 #x3b #xb0 #x3f #xdc #x03 #x20 #x0f #x20 #x01 #x20 #x0f ;; .;.;.;.?.. . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #xb2 #x3b #xb1 #x3b #xb0 #x3b #xb0 #x3f #xdc #x0b #xdc #x07 #xdb #x03 ;;  ..;.;.;.?......
+	#xdb #x03 #xdc #x38 #x20 #x0f #xdf #x03 #xb1 #x3b #xb0 #x3b #xb0 #x3f #xdc #x03 ;; ...8 ....;.;.?..
+	#xdc #x07 #xb0 #x3f #xb1 #x3f #xb2 #x3f #xdd #x3b #xb2 #x3b #xb1 #x3b #xdc #x78 ;; ...?.?.?.;.;.;.x
+	#xdf #x08 #x20 #x0f #x20 #x0f #xde #x08 #xb2 #x3b #xb1 #x3b #xb0 #x3b #xb0 #x3f ;; .. . ....;.;.;.?
+	#x20 #x0f #xdf #x03 #xb1 #x3b #xb2 #x3b #xdb #x03 #xdd #x03 #x20 #x01 #x20 #x0f ;;  ....;.;.... . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #xdc #x08 #xdc #x08 #xdc #x08 #x20 #x0f ;;  . . . ....... .
+	#x20 #x0f #xb0 #x3f #xb0 #x3f #xb1 #x3f #xdd #x3b #xdb #x0b #xdf #x03 #x20 #x0f ;;  ..?.?.?.;.... .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #xdf #x08 #xdf #x03 #xdf #x03 #xdf #x08 ;;  . . . .........
+	#x20 #x0f #x20 #x0f #xdf #x08 #xdf #x03 #xdf #x03 #x20 #x0f #x20 #x01 #x20 #x0f ;;  . ....... . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #xdb #x08 #xb2 #x38 #xb1 #x38 #xdc #x03 ;;  . . . ....8.8..
+	#xdc #x07 #xb0 #x3b #xb1 #x3b #xdf #x3b #xdf #x08 #x20 #x0f #x20 #x0f #x20 #x0f ;; ...;.;.;.. . . .
+	#x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b ;;  . . . . . . . .
+	#x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b ;;  . . . . . . . .
+	#x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b ;;  . . . . . . . .
+	#x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b ;;  . . . . . . . .
+	#x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b ;;  . . . . . . . .
+	#x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b ;;  . . . . . . . .
+	#x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b ;;  . . . . . . . .
+	#x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0b #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x2d #x08 #x3d #x08 #x20 #x0a #x43 #x0b #x72 #x0b #x6f #x0b #x73 #x0b #x73 #x0b ;; -.=. .C.r.o.s.s.
+	#x2d #x0b #x70 #x0b #x6c #x0b #x61 #x0b #x74 #x0b #x66 #x0b #x6f #x0b #x72 #x0b ;; -.p.l.a.t.f.o.r.
+	#x6d #x0b #x20 #x0b #x72 #x0b #x65 #x0b #x6e #x0b #x64 #x0b #x65 #x0b #x72 #x0b ;; m. .r.e.n.d.e.r.
+	#x69 #x0b #x6e #x0b #x67 #x0b #x20 #x0b #x6c #x0b #x69 #x0b #x62 #x0b #x72 #x0b ;; i.n.g. .l.i.b.r.
+	#x61 #x0b #x72 #x0b #x79 #x0b #x20 #x0f #x3d #x08 #x2d #x08 #x20 #x01 #x20 #x0f ;; a.r.y. .=.-. . .
+	#x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a ;;  . . . . . . . .
+	#x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a ;;  . . . . . . . .
+	#x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a ;;  . . . . . . . .
+	#x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a ;;  . . . . . . . .
+	#x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a #x20 #x0a ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+	#x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f #x20 #x0f ;;  . . . . . . . .
+))
+
 (eval-when (:compile-toplevel :execute :load-toplevel)
   (enable-interpol-syntax))
 
@@ -39,10 +292,15 @@
              (width (foreign-slot-value bgfx-stats '(:struct stats) 'width))
              (height (foreign-slot-value bgfx-stats '(:struct stats) 'height))
              (text-width (foreign-slot-value bgfx-stats '(:struct stats) 'text-width))
-             (text-height (foreign-slot-value bgfx-stats '(:struct stats) 'text-height)))
-        (dbg-text-printf 0 6 #x0f d :int width :int height :int text-width :int text-height))
+             (text-height (foreign-slot-value bgfx-stats '(:struct stats) 'text-height))
+             (logo-ptr (foreign-alloc :uint8 :initial-contents *logo*)))
+        (dbg-text-printf 0 6 #x0f d :int width :int height :int text-width :int text-height) 
+        (dbg-text-image 
+         (round (* (- (max (/ (/ width 2) 8) 20) 20) 1.0))
+         (round (* (- (max (/ (/ height 2) 16) 6) 6) 1.0))
+         40  12 logo-ptr 160))
              
-      (frame nil))))
+        (frame nil))))
 
 (defun run ()
   (sdl2:with-init (:video)

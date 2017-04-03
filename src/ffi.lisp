@@ -478,9 +478,14 @@
   (capture :boolean))
 
 (defcfun ("bgfx_get_stats" get-stats) (:pointer stats-t))
-(defun bgfx-get-stats ()
-  (let ((stats-ptr (get-stats)))
-    (mem-ref stats-ptr '(:struct stats))))
+
+(defcfun ("bgfx_dbg_text_image" dbg-text-image) :void
+  (x :uint16)
+  (y :uint16)
+  (width :uint16)
+  (height :uint16)
+  (data :pointer)
+  (pitch :uint16))
 
 (let ((pack (find-package :cl-bgfx)))
   (do-all-symbols (sym pack) (when (eql (symbol-package sym) pack) (export sym))))
