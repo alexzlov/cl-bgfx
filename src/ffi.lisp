@@ -186,8 +186,8 @@
   (max-gpu-latency :uint32)
   (width :uint16)
   (height :uint16)
-  (tex-width :uint16)
-  (tex-height :uint16))
+  (text-width :uint16)
+  (text-height :uint16))
 (defctype stats-t (:struct stats))
 
 (defcstruct vertex-decl
@@ -476,6 +476,11 @@
 
 (defcfun ("bgfx_frame" frame) :uint32
   (capture :boolean))
+
+(defcfun ("bgfx_get_stats" get-stats) (:pointer stats-t))
+(defun bgfx-get-stats ()
+  (let ((stats-ptr (get-stats)))
+    (mem-ref stats-ptr '(:struct stats))))
 
 (let ((pack (find-package :cl-bgfx)))
   (do-all-symbols (sym pack) (when (eql (symbol-package sym) pack) (export sym))))

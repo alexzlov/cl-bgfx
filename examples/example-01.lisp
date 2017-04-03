@@ -27,13 +27,21 @@
 (defun render-loop ()
   (let ((a (foreign-string-alloc "Lisp bgfx test..."))
         (b (foreign-string-alloc "Initialization and debug text test..."))
-        (c (foreign-string-alloc #?"Color can be changed with ANSI \x1b[9;me\x1b[10;ms\x1b[11;mc\x1b[12;ma\x1b[13;mp\x1b[14;me\x1b[0m code too." :encoding :ascii)))
+        (c (foreign-string-alloc #?"Color can be changed with ANSI \x1b[9;me\x1b[10;ms\x1b[11;mc\x1b[12;ma\x1b[13;mp\x1b[14;me\x1b[0m code too." :encoding :ascii))
+        (d (foreign-string-alloc #?"Backbuffer %dW x %dH in pixels, debug text %dW x %dH in characters.")))
     (progn
       (touch 0)
       (dbg-text-clear 0 nil)
       (dbg-text-printf 0 1 #x4f a)
       (dbg-text-printf 0 2 #x6f b)
       (dbg-text-printf 0 4 #x0f c)
+      (let* ((bgfx-stats (get-stats))
+             (width (foreign-slot-value bgfx-stats '(:struct stats) 'width))
+             (height (foreign-slot-value bgfx-stats '(:struct stats) 'height))
+             (text-width (foreign-slot-value bgfx-stats '(:struct stats) 'text-width))
+             (text-height (foreign-slot-value bgfx-stats '(:struct stats) 'text-height)))
+        (dbg-text-printf 0 6 #x0f d :int width :int height :int text-width :int text-height))
+             
       (frame nil))))
 
 (defun run ()
