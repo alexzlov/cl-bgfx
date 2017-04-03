@@ -471,7 +471,8 @@
   (x :uint16)
   (y :uint16)
   (attr :uint8)
-  (format (:pointer :string)))
+  (format (:pointer :string))
+  &rest)
 
 (defcfun ("bgfx_frame" frame) :uint32
   (capture :boolean))

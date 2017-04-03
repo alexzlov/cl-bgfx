@@ -1,10 +1,13 @@
 (defpackage #:example-01
-  (:use #:cl #:cl-bgfx #:cffi)
+  (:use #:cl #:cl-bgfx #:cffi #:cl-interpol)
   (:documentation "Basic example")
   (:export :run :init-bgfx-capi)
   (:import-from plus-c #:& #:*))
 
 (in-package :example-01)
+
+(eval-when (:compile-toplevel :execute :load-toplevel)
+  (enable-interpol-syntax))
 
 (defparameter *win* nil)
 
@@ -22,13 +25,15 @@
           1))))
 
 (defun render-loop ()
-  (with-foreign-strings ((a "Lisp bgfx test...")
-                         (b "Initialization and debug text test..."))
+  (let ((a (foreign-string-alloc "Lisp bgfx test..."))
+        (b (foreign-string-alloc "Initialization and debug text test..."))
+        (c (foreign-string-alloc #?"Color can be changed with ANSI \x1b[9;me\x1b[10;ms\x1b[11;mc\x1b[12;ma\x1b[13;mp\x1b[14;me\x1b[0m code too." :encoding :ascii)))
     (progn
       (touch 0)
       (dbg-text-clear 0 nil)
       (dbg-text-printf 0 1 #x4f a)
       (dbg-text-printf 0 2 #x6f b)
+      (dbg-text-printf 0 4 #x0f c)
       (frame nil))))
 
 (defun run ()
