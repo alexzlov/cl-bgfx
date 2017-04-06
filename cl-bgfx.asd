@@ -23,4 +23,11 @@
                #:cl-interpol)
   :pathname "examples"
   :serial t
-  :components ((:file "example-01")))
+  :components ((:file "example-01")
+               (:file "example-02")))
+
+(defpackage #:bgfx-config (:export #:*base-directory* #:*shaders-directory*))
+(defparameter bgfx-config:*base-directory*
+  (make-pathname :name nil :type nil :defaults *load-truename*))
+(defparameter bgfx-config:*shaders-directory*
+  (merge-pathnames #p"shaders/" bgfx-config:*base-directory*))

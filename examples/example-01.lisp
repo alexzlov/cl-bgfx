@@ -1,7 +1,7 @@
 (defpackage #:example-01
   (:use #:cl #:cl-bgfx #:cffi #:cl-interpol)
   (:documentation "Basic example")
-  (:export :run :init-bgfx-capi)
+  (:export :run)
   (:import-from plus-c #:& #:*))
 
 (in-package :example-01)
@@ -268,6 +268,7 @@
 
 (cffi:defcallback event-filter :int ((userdata :pointer)
                                      (sdl-event-ptr :pointer))
+  (declare (ignore userdata))
    (plus-c:c-let ((sdl-event sdl2-ffi:sdl-event :from sdl-event-ptr))
       (let ((event-type (sdl2:get-event-type sdl-event)))
         (if (eql event-type :windowevent)
@@ -283,7 +284,8 @@
   (let ((a (foreign-string-alloc "Lisp bgfx test..."))
         (b (foreign-string-alloc "Initialization and debug text test..."))
         (c (foreign-string-alloc #?"Color can be changed with ANSI \x1b[9;me\x1b[10;ms\x1b[11;mc\x1b[12;ma\x1b[13;mp\x1b[14;me\x1b[0m code too."))
-        (d (foreign-string-alloc #?"Backbuffer %dW x %dH in pixels, debug text %dW x %dH in characters.")))
+        (d (foreign-string-alloc #?"Backbuffer %dW x %dH in pixels, debug text %dW x %dH in characters."))
+        (e (foreign-string-alloc (symbol-name (get-renderer-type)))))
     (progn
       (touch 0)
       (dbg-text-clear 0 nil)
@@ -295,17 +297,17 @@
              (height (foreign-slot-value bgfx-stats '(:struct stats) 'height))
              (text-width (foreign-slot-value bgfx-stats '(:struct stats) 'text-width))
              (text-height (foreign-slot-value bgfx-stats '(:struct stats) 'text-height)))
-        (dbg-text-printf 0 6 #x0f d :int width :int height :int text-width :int text-height) 
+        (dbg-text-printf 0 6 #x0f d :int width :int height :int text-width :int text-height)
+        (dbg-text-printf 0 7 #x0f e)
         (dbg-text-image 
          (round (* (- (max (/ (/ width 2) 8) 20) 20) 1.0))
          (round (* (- (max (/ (/ height 2) 16) 6) 6) 1.0))
-         40  12 *logo-ptr* 160))
-             
+         40  12 *logo-ptr* 160))             
         (frame nil))))
 
 (defun run ()
   (sdl2:with-init (:video)
-    (sdl2:with-window (window :title "Foo" :w 640 :h 480 :flags '(:resizable))
+    (sdl2:with-window (window :title "Example01: Intro" :w 640 :h 480 :flags '(:resizable))
       (with-foreign-objects (
              (callback '(:struct callback-interface))
              (allocator '(:struct allocator-interface))

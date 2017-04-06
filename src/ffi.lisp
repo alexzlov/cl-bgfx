@@ -48,11 +48,11 @@
 (defctype attrib-t attrib)
 
 (defcenum attrib-type 
-  :uint8
-  :uint10
-  :int16
-  :half
-  :float
+  :at-uint8
+  :at-uint10
+  :at-int16
+  :at-half
+  :at-float
   :attrib-type-count)
 (defctype attrib-type-t attrib-type)
 
@@ -333,7 +333,9 @@
 
 ;;;;;;;;;;;;; BGFX-C-API
 
-(fli:register-module :bgfx :real-name "bgfx.dll" :connection-style :immediate)
+;(fli:register-module :bgfx :real-name "bgfx.dll" :connection-style :immediate)
+(define-foreign-library bgfx (t (:default "bgfx")))
+(use-foreign-library bgfx)
 
 (defcfun ("bgfx_set_platform_data" set-platform-data) :void
     (data (:pointer platform-data-t)))
@@ -427,6 +429,8 @@
 (defcfun ("bgfx_get_renderer_name" get-renderer-name) (:pointer :char)
   (type renderer-type-t))
 
+(defcfun ("bgfx_get_renderer_type" get-renderer-type) renderer-type)
+
 (defcfun ("bgfx_init" init) :bool
     (type renderer-type-t)
     (venfor-id :uint16)
@@ -486,6 +490,27 @@
   (height :uint16)
   (data :pointer)
   (pitch :uint16))
+
+(defcfun ("bgfx_make_ref" make-ref) (:pointer memory-t)
+         (data :pointer)
+         (size :uint32))
+         
+(defcfun ("bgfx_create_vertex_buffer" create-vertex-buffer) (:pointer (:struct vertex-buffer-handle))
+  (mem (:pointer memory-t))
+  (decl (:pointer vertex-decl-t))
+  (flags :uint16))
+
+(defcfun ("bgfx_create_index_buffer" create-index-buffer) (:pointer (:struct index-buffer-handle))
+  (mem (:pointer memory-t))
+  (flags :uint16))
+
+(defcfun ("bgfx_create_shader" create-shader) (:pointer (:struct shader-handle))
+  (mem (:pointer memory-t)))
+
+(defcfun ("bgfx_create_program" create-program) (:pointer (:struct program-handle))
+  (vsh (:pointer shader-handle-t))
+  (fsh (:pointer shader-handle-t))
+  (destroy-shader :boolean))
 
 (let ((pack (find-package :cl-bgfx)))
   (do-all-symbols (sym pack) (when (eql (symbol-package sym) pack) (export sym))))
